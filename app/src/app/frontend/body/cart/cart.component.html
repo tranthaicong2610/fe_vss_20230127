@@ -1,0 +1,56 @@
+<section>
+  <div class="spacer">
+    <div class="container">
+      <div class="row mt-5">
+        <div class="col-lg-9">
+          <div class="row shop-listing">
+            <table class="table shop-table" *ngIf="carts.items.length !=0">
+              <tr>
+                <th class="b-0">Tên sản phẩm</th>
+                <th class="b-0">Giá</th>
+                <th class="b-0">Số lượng</th>
+                <th class="b-0 text-right">Tổng tiền </th>
+              </tr>
+              <tr *ngFor="let item of carts.items">
+                <td>{{ item.name }}</td>
+                <td>{{ item.price }}</td>
+                <td>
+
+                  <button class="btn btn-primary btn-sm" (click)="deleteCart(item.id,1)">-</button>
+                  {{ item.quantity }}
+                  <button class="btn btn-primary btn-sm" (click)="increamentQTY(item.id,1)">+</button>
+
+                </td>
+                <td class="text-right">
+                  <h5 class="font-medium m-b-30">{{ item.total }}</h5>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="1" align="right">Thành tiền :{{ carts.subTotal }}</td>
+                <td colspan="2" align="right">Tổng số lượng :{{ carts.totalQuantity }}</td>
+                <td colspan="4" align="right">
+                  <button class="btn btn-danger" (click)="emptyCart()">Làm mới giỏ hàng</button>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-------------------------------------------------->
+<ng-container *ngIf="carts.items.length==0">
+  <div class="container">
+    <div class="card">
+      <h5 class="card-title">Giỏ hàng của tôi</h5>
+    </div>
+    <div class="center">
+      <img src="https://rukminim1.flixcart.com/www/800/800/promos/16/05/2019/d438a32e-765a-4d8b-b4a6-520b560971e8.png?q=90" alt="">
+      <h4>Giỏ hàng đang rỗng!</h4>
+      <h6>Thêm vào giỏ hàng</h6>
+      <button routerLink="" class="btn btn-primary">Thêm ngay</button>
+    </div>
+  </div>
+</ng-container>
+

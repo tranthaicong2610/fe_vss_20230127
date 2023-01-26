@@ -1,0 +1,85 @@
+<app-top-left></app-top-left>
+
+<div class="detail">
+
+    <div class="link-nav">
+        <span>&nbsp;</span>
+        <a class="btn" routerLink="/admin/product-adedit">Create New</a>
+    </div>
+
+    <div class="search">
+        <mat-form-field>
+            <mat-label>Search</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Ex. text" #input>
+        </mat-form-field>
+    </div>
+
+    <div class="mat-elevation-z8">
+        <table mat-table [dataSource]="dataSource" matSort>
+            <!-- id -->
+            <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> STT </th>
+                <td mat-cell *matCellDef="let row; let i = index;">{{i+1}} </td>
+            </ng-container>
+
+            <!-- pImapImageDefaultges -->
+            <ng-container matColumnDef="image">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Ảnh </th>
+                <td mat-cell *matCellDef="let row">
+                    <a routerLink="/admin/product-adedit/{{row.id}}">
+                        <img class="thumb" src="{{row.image}}" alt="{{row.pName}}">
+                    </a>
+                </td>
+            </ng-container>
+
+            <!-- pCategory -->
+            <ng-container matColumnDef="type">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Loại sản phẩm </th>
+                <td mat-cell *matCellDef="let row">
+                    {{this.categories[row.type]}}
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="code">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Giá sản phẩm </th>
+              <td mat-cell *matCellDef="let row">
+                  {{row.price | number}}
+              </td>
+          </ng-container>
+
+            <!-- pName -->
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Tên sản phẩm </th>
+                <td mat-cell *matCellDef="let row"> {{row.name}} </td>
+            </ng-container>
+
+            <!-- pQty -->
+            <ng-container matColumnDef="quantity">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Số lượng tồn </th>
+                <td mat-cell *matCellDef="let row"> {{row.quantity | number}} </td>
+            </ng-container>
+
+            <!-- pPrice -->
+            <ng-container matColumnDef="price">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Giá sản phẩm </th>
+                <td mat-cell *matCellDef="let row">
+                    {{row.price | number}}
+                </td>
+            </ng-container>
+
+            <!-- pPriceSale -->
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+            <!-- Row shown when there is no matching data. -->
+            <tr class="mat-row" *matNoDataRow>
+                <td class="mat-cell" colspan="8">No data matching the filter "{{input.value}}"</td>
+            </tr>
+        </table>
+
+        <!-- <mat-paginator [pageSizeOptions]="[2, 5, 10, 25, 100]"></mat-paginator> -->
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+    </div>
+
+</div>

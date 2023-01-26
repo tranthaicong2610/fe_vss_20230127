@@ -1,0 +1,118 @@
+<app-top-left></app-top-left>
+
+<div class="detail">
+  <!-- <form [formGroup]="myForm"> -->
+  <form
+    [formGroup]="myForm"
+    class="mat-elevation-z8"
+    enctype="multipart/form-data"
+  >
+    <input type="hidden" formControlName="id" />
+
+    <div class="link-nav">
+      <a routerLink="/admin/products">
+        <i class="material-icons">keyboard_backspace</i> Back
+      </a>
+      <h1>Product</h1>
+      <span *ngIf="!paramId">Tạo mới</span>
+      <span *ngIf="paramId">Cập nhật</span>
+    </div>
+
+    <div class="row">
+      <div class="col-md-4">
+        <label>Tên sản phẩm</label>
+        <input class="form-control" formControlName="name" />
+        <!-- <small class="error" *ngIf="f.pName.invalid && (f.pName.dirty || f.pName.touched)">*Required</small> -->
+      </div>
+
+      <div class="col-md-4 mb-1em">
+        <label>Loại sản phẩm</label>
+        <div>
+          <mat-select class="form-control" formControlName="type">
+            <!-- <mat-option>Please select</mat-option> -->
+            <!-- <mat-option *ngFor="let cat of categories">
+                        {{cat.name}}
+                    </mat-option> -->
+            <mat-option *ngFor="let cat of this.categories">
+              {{ cat }}
+            </mat-option>
+          </mat-select>
+          <!-- <small class="error" *ngIf="f.pCategory.invalid && (f.pCategory.dirty || f.pCategory.touched)">*Required</small> -->
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <label>Số lượng</label>
+        <input class="form-control" formControlName="quantity" />
+        <!-- <small class="error" *ngIf="f.pQty.invalid && (f.pQty.dirty || f.pQty.touched)">*Required</small> -->
+      </div>
+
+      <div class="col-md-4">
+        <label>Giá</label>
+        <input class="form-control" formControlName="price" />
+        <!-- <small class="error" *ngIf="f.pPrice.invalid && (f.pPrice.dirty || f.pPrice.touched)">*Required</small> -->
+      </div>
+
+      <div class="col-md-8">
+        <label>Ảnh sản phẩm</label>
+        <input
+          type="file"
+          class="form-control"
+          multiple
+          (change)="selectMultiple($event)"
+        />
+        <!-- --render images befor upload -->
+        <img
+          *ngFor="let url of images"
+          [src]="url"
+          height="150"
+          width="200px"
+          style="margin: 3px"
+        />
+        <br />
+        <ng-container *ngIf="ImageDefault">
+          <hr />
+          <label>Images Default</label><br />
+          <img
+            class="image"
+            src="{{ ImageDefault }}"
+            height="auto"
+            width="300px"
+            style="margin: 3px"
+          />
+          <br />
+          <hr />
+          <label>Images all</label><br />
+          <div class="img-wrap">
+            <div *ngFor="let img of ImagesAll" class="img-main">
+              <img
+                class="image"
+                (click)="changeImageDefault(img)"
+                src="/assets/img/product-1.jpg"
+                height="auto"
+                width="300px"
+                style="margin: 3px"
+              />
+              <!-- <a *ngIf="ImageDefault !== img.url" (click)="delimg(img)" class="del" title="delete iamge"><i class="material-icons">delete_outline</i></a> -->
+            </div>
+          </div>
+        </ng-container>
+      </div>
+
+      <div class="col-md-12">
+        <label>Mô tả</label>
+        <textarea
+          class="form-control"
+          formControlName="description"
+          rows="4"
+        ></textarea>
+        <!-- <small class="error" *ngIf="f.pDesc.invalid && (f.pDesc.dirty || f.pDesc.touched)">*Required</small> -->
+      </div>
+
+      <div class="col-md-12 txt-center">
+        <button *ngIf="!paramId" class="btn" (click)="submit()">Submit</button>
+        <button *ngIf="paramId" class="btn" (click)="update(paramId)">Update</button>
+      </div>
+    </div>
+  </form>
+</div>
